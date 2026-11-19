@@ -44,4 +44,26 @@ class KatalogController extends Controller
         // 4. Kirim data ke view
         return view('katalog.index', compact('produk', 'q'));
     }
+
+    /**
+     * Menampilkan halaman detail menu berdasarkan ID.
+     */
+    public function show($id)
+    {
+        // Ambil data menu berdasarkan ID beserta relasi kategori dan admin
+        $item = Menu::with(['kategori', 'admin'])->findOrFail($id);
+
+        $produk = [
+            'id'         => $item->id_menu,
+            'nama'       => $item->nama_menu,
+            'kategori'   => $item->kategori ? $item->kategori->nama_kategori : 'Umum',
+            'harga'      => $item->harga,
+            'stok'       => 10,
+            'deskripsi'  => $item->deskripsi_menu,
+            'status'     => $item->status_ketersediaan,
+            'admin'      => $item->admin ? $item->admin->nama_admin : '-',
+        ];
+
+        return view('katalog.show', compact('produk'));
+    }
 }

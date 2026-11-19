@@ -76,9 +76,10 @@
                     </div>
 
                     <div style="display: flex; gap: 8px;">
-                        <button style="flex: 1; padding: 8px; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                        {{-- Tombol Detail yang sudah diubah menjadi tag <a> --}}
+                        <a href="{{ route('katalog.show', $item['id']) }}" style="flex: 1; padding: 8px; background: #fff; border: 1px solid #ccc; border-radius: 4px; text-align: center; text-decoration: none; color: #333; font-size: 13px; display: inline-block;">
                             Detail
-                        </button>
+                        </a>
                         
                         @if ($item['stok'] > 0)
                             <button style="flex: 1; padding: 8px; background: #000; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">
@@ -100,4 +101,5 @@
         @endforelse
     </div>
 
+</div>
 @endsection
