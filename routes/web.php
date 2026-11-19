@@ -39,6 +39,10 @@ Route::get('/pesan/{id_menu}', [PesananController::class, 'create'])
 Route::post('/pesan', [PesananController::class, 'store'])
     ->name('pesanan.store');
 
+    Route::get('/checkout', function () {
+    return view('pesanan.checkout');
+})->name('pesanan.checkout');
+
 // Menampilkan halaman bukti / konfirmasi pesanan berhasil
 Route::get('/pesanan/sukses/{id_pesanan}', [PesananController::class, 'success'])
     ->whereNumber('id_pesanan')
