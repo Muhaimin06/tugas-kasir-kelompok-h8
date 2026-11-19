@@ -4,9 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\PesananController; // 1. Tambahkan use controller Pesanan di sini
 
+// Halaman Beranda Utama (Diubah dari 'welcome' ke 'beranda')
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('beranda');
+})->name('beranda');
 
 Route::get('/sapa', function(){
     return 'Halo, Kelompok 5';
@@ -39,7 +40,7 @@ Route::get('/pesan/{id_menu}', [PesananController::class, 'create'])
 Route::post('/pesan', [PesananController::class, 'store'])
     ->name('pesanan.store');
 
-    Route::get('/checkout', function () {
+Route::get('/checkout', function () {
     return view('pesanan.checkout');
 })->name('pesanan.checkout');
 
