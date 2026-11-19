@@ -25,10 +25,9 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Jika nanti Anda ingin menambahkan seeder untuk Kategori atau Produk, panggil di sini:
-        // $this->call([
-        //     KategoriSeeder::class,
-        //     MenuSeeder::class,
-        // ]);
+        // Panggil seeder dummy kamu di sini
+        $this->call([
+            DatabaseSeederDummy::class,
+        ]);
     }
 }

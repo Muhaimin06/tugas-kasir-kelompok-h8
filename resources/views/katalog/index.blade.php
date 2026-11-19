@@ -3,100 +3,109 @@
 @section('title', 'Katalog Pilihan Kuliner Segar')
 
 @section('content')
-<div class="container" style="padding: 20px 0;">
+<div class="container py-4">
     
-    {{-- Header Katalog --}}
-    <div style="margin-bottom: 20px;">
-        <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">Katalog Pilihan Kuliner Segar</h1>
-        <p style="color: #666;">Pilihan menu katering kantor, paket harian sehat, dan jamuan prasmanan premium.</p>
+    <!-- Header Katalog -->
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h1 class="h3 fw-bold mb-1">Katalog Pilihan Kuliner Segar</h1>
+            <p class="text-muted mb-0">Pilihan menu katering kantor, paket harian sehat, dan jamuan prasmanan premium.</p>
+        </div>
+        <!-- Form Pencarian -->
+        <div class="col-md-6 mt-3 mt-md-0">
+            <form method="GET" action="{{ route('katalog.index') }}" class="d-flex gap-2 justify-content-md-end">
+                <input 
+                    type="text" 
+                    id="q" 
+                    name="q" 
+                    value="{{ $q ?? '' }}" 
+                    placeholder="Cari menu favorit..." 
+                    class="form-control w-auto"
+                    style="min-width: 240px;"
+                >
+                <button type="submit" class="btn btn-dark">
+                    Cari
+                </button>
+                @if(!empty($q))
+                    <a href="{{ route('katalog.index') }}" class="btn btn-outline-secondary d-flex align-items-center">Reset</a>
+                @endif
+            </form>
+        </div>
     </div>
 
-    {{-- Form Pencarian --}}
-    <form method="GET" action="{{ route('katalog.index') }}" style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
-        <input 
-            type="text" 
-            id="q" 
-            name="q" 
-            value="{{ $q ?? '' }}" 
-            placeholder="Cari menu favorit..." 
-            style="padding: 8px 12px; width: 250px; border: 1px solid #ccc; border-radius: 4px;"
-        >
-        <button type="submit" style="padding: 8px 16px; background-color: #333; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
-            Cari
-        </button>
-        @if(!empty($q))
-            <a href="{{ route('katalog.index') }}" style="color: #666; text-decoration: underline; font-size: 14px;">Reset Filter</a>
-        @endif
-    </form>
+    <hr class="text-muted mb-4">
 
-    <hr style="border: none; border-top: 1px solid #ddd; margin-bottom: 20px;">
-
-    {{-- Daftar Produk Grid (Menyesuaikan Wireframe) --}}
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-        @forelse ($produk as $item)
-            <div style="border: 1px solid #ddd; border-radius: 6px; padding: 15px; background: #fff; display: flex; flex-direction: column; justify-content: space-between;">
-                
-                {{-- Bagian Atas Kartu: Kategori & Status Stok --}}
-                <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <span style="font-size: 12px; background: #eee; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold;">
-                            {{ $item['kategori'] }}
-                        </span>
-                        
-                        @if ($item['stok'] > 0)
-                            <span style="font-size: 12px; background: #d4edda; color: #155724; padding: 3px 8px; border-radius: 4px; font-weight: bold;">
-                                [ TERSEDIA ] (Stok: {{ $item['stok'] }})
+    <!-- Daftar Produk Grid Bootstrap -->
+    <div class="row g-4">
+        @forelse ($produk as $index => $item)
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-150 shadow-sm border-0 p-3 bg-white h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <!-- Atas: Kategori & Status Stok -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-light text-dark text-uppercase px-2 py-1 border">
+                                {{ $item['kategori'] }}
                             </span>
-                        @else
-                            <span style="font-size: 12px; background: #f8d7da; color: #721c24; padding: 3px 8px; border-radius: 4px; font-weight: bold;">
-                                [ HABIS ]
-                            </span>
-                        @endif
+                            
+                            @if ($item['stok'] > 0)
+                                <span class="badge bg-success bg-opacity-10 text-success px-2 py-1 fw-semibold">
+                                    Tersedia ({{ $item['stok'] }})
+                                </span>
+                            @else
+                                <span class="badge bg-danger bg-opacity-10 text-danger px-2 py-1 fw-semibold">
+                                    Habis
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Gambar Menu Realistis / Natural (Gradient hangat & ikon kuliner non-AI) -->
+                        <div class="rounded-3 mb-3 position-relative overflow-hidden d-flex align-items-center justify-content-center" 
+                             style="height: 180px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                            <div class="text-center p-3">
+                                <span class="d-block fs-1 mb-1">🍽️</span>
+                                <span class="fw-bold text-dark fs-6 text-truncate px-2 d-block" style="max-width: 240px;">{{ $item['nama'] }}</span>
+                                <small class="text-muted fst-italic">Standar Dapur Pusat</small>
+                            </div>
+                        </div>
+
+                        <!-- Nama Produk & Deskripsi -->
+                        <h3 class="h5 fw-bold text-dark mb-2">{{ $item['nama'] }}</h3>
+                        <p class="text-muted small mb-3">
+                            {{ $item['deskripsi'] ?? 'Menu pilihan berkualitas tinggi yang disiapkan higienis dan segar setiap hari.' }}
+                        </p>
                     </div>
 
-                    {{-- Placeholder Foto Menu (Sesuai Wireframe) --}}
-                    <div style="background: #f0f0f0; height: 120px; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin-bottom: 12px; color: #888; font-size: 13px;">
-                        [ PLACEHOLDER FOTO MENU ]
+                    <!-- Bagian Bawah: Harga & Aksi -->
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center border-top pt-3 mb-3">
+                            <span class="text-muted small text-uppercase fw-semibold">Harga Satuan</span>
+                            <strong class="h5 text-dark mb-0">Rp {{ number_format($item['harga'], 0, ',', '.') }}</strong>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('katalog.show', $item['id']) }}" class="btn btn-outline-dark btn-sm flex-fill fw-semibold">
+                                Detail
+                            </a>
+                            
+                            @if ($item['stok'] > 0)
+                                <a href="{{ route('pesanan.create', $item['id']) }}" class="btn btn-dark btn-sm flex-fill fw-semibold">
+                                    Pesan
+                                </a>
+                            @else
+                                <button disabled class="btn btn-secondary btn-sm flex-fill fw-semibold" style="opacity: 0.6;">
+                                    Habis
+                                </button>
+                            @endif
+                        </div>
                     </div>
 
-                    {{-- Nama Produk --}}
-                    <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">{{ $item['nama'] }}</h3>
-                    
-                    {{-- Deskripsi Singkat Opsional (bisa disesuaikan jika data ada) --}}
-                    <p style="font-size: 13px; color: #666; margin-bottom: 15px;">
-                        Menu pilihan berkualitas tinggi yang disiapkan khusus untuk Anda.
-                    </p>
                 </div>
-
-                {{-- Bagian Bawah Kartu: Harga & Tombol Aksi --}}
-                <div>
-                    <div style="border-top: 1px solid #eee; padding-top: 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 12px; color: #777;">HARGA SATUAN</span>
-                        <strong style="font-size: 16px; color: #000;">Rp {{ number_format($item['harga'], 0, ',', '.') }}</strong>
-                    </div>
-
-                    <div style="display: flex; gap: 8px;">
-                        {{-- Tombol Detail yang sudah diubah menjadi tag <a> --}}
-                        <a href="{{ route('katalog.show', $item['id']) }}" style="flex: 1; padding: 8px; background: #fff; border: 1px solid #ccc; border-radius: 4px; text-align: center; text-decoration: none; color: #333; font-size: 13px; display: inline-block;">
-                            Detail
-                        </a>
-                        
-                        @if ($item['stok'] > 0)
-    <a href="{{ route('pesanan.create', $item['id']) }}" style="flex: 1; padding: 8px; background: #000; color: #fff; border: none; border-radius: 4px; text-align: center; text-decoration: none; font-size: 13px; display: inline-block;">
-        Pesan
-    </a>
-@else
-    <button disabled style="flex: 1; padding: 8px; background: #ccc; color: #666; border: none; border-radius: 4px; cursor: not-allowed; font-size: 13px;">
-        Habis
-    </button>
-@endif
-                    </div>
-                </div>
-
             </div>
         @empty
-            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: #f9f9f9; border-radius: 6px;">
-                <p style="color: #d9534f; font-size: 16px; margin: 0;">Produk tidak ditemukan.</p>
+            <div class="col-12 text-center py-5">
+                <div class="p-5 bg-white rounded-4 border">
+                    <p class="text-danger fs-5 mb-0">Menu atau produk tidak ditemukan.</p>
+                </div>
             </div>
         @endforelse
     </div>
