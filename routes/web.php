@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KatalogController;
+use App\Http\Controllers\PesananController; // 1. Tambahkan use controller Pesanan di sini
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,3 +24,22 @@ Route::get('/katalog/{id}',
 // /katalog/1    → detail
 // /katalog/999  → 404 (tidak ada)
 // /katalog/abc  → 404 (pola route)
+
+
+// ==========================================
+// 2. TAMBAHKAN ROUTE PESANAN DI BAWAH INI
+// ==========================================
+
+// Menampilkan form pemesanan berdasarkan ID menu
+Route::get('/pesan/{id_menu}', [PesananController::class, 'create'])
+    ->whereNumber('id_menu')
+    ->name('pesanan.create');
+
+// Memproses penyimpanan data pesanan ke database (Form POST)
+Route::post('/pesan', [PesananController::class, 'store'])
+    ->name('pesanan.store');
+
+// Menampilkan halaman bukti / konfirmasi pesanan berhasil
+Route::get('/pesanan/sukses/{id_pesanan}', [PesananController::class, 'success'])
+    ->whereNumber('id_pesanan')
+    ->name('pesanan.success');

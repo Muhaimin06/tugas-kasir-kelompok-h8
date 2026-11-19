@@ -82,14 +82,14 @@
                         </a>
                         
                         @if ($item['stok'] > 0)
-                            <button style="flex: 1; padding: 8px; background: #000; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">
-                                Pesan
-                            </button>
-                        @else
-                            <button disabled style="flex: 1; padding: 8px; background: #ccc; color: #666; border: none; border-radius: 4px; cursor: not-allowed; font-size: 13px;">
-                                Habis
-                            </button>
-                        @endif
+    <a href="{{ route('pesanan.create', $item['id']) }}" style="flex: 1; padding: 8px; background: #000; color: #fff; border: none; border-radius: 4px; text-align: center; text-decoration: none; font-size: 13px; display: inline-block;">
+        Pesan
+    </a>
+@else
+    <button disabled style="flex: 1; padding: 8px; background: #ccc; color: #666; border: none; border-radius: 4px; cursor: not-allowed; font-size: 13px;">
+        Habis
+    </button>
+@endif
                     </div>
                 </div>
 

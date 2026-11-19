@@ -60,14 +60,14 @@
         {{-- Tombol Aksi --}}
         <div>
             @if ($produk['status'] == 'Tersedia')
-                <button style="padding: 10px 24px; background: #000; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold;">
-                    Pesan Sekarang
-                </button>
-            @else
-                <button disabled style="padding: 10px 24px; background: #ccc; color: #666; border: none; border-radius: 4px; cursor: not-allowed; font-size: 14px;">
-                    Menu Habis
-                </button>
-            @endif
+    <a href="{{ route('pesanan.create', $produk['id']) }}" style="padding: 10px 24px; background: #000; color: #fff; border: none; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: bold; display: inline-block;">
+        Pesan Sekarang
+    </a>
+@else
+    <button disabled style="padding: 10px 24px; background: #ccc; color: #666; border: none; border-radius: 4px; cursor: not-allowed; font-size: 14px;">
+        Menu Habis
+    </button>
+@endif
         </div>
 
     </div>
