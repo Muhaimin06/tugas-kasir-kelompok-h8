@@ -52,16 +52,16 @@
 
     <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
-            <a class="navbar-brand" href="/">DAPUR MODERN</a>
+            <a class="navbar-brand" href="{{ route('beranda') }}">DAPUR MODERN</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link px-3" href="/">Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="/katalog">Katalog Menu</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="/pesanan">Pemesanan</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="/checkout">Checkout</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{{ route('beranda') }}">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{{ route('katalog.index') }}">Katalog Menu</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{{ route('pesanan.create', 1) }}">Pemesanan</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{{ route('pesanan.checkout') }}">Checkout</a></li>
                 </ul>
             </div>
         </div>
